@@ -18,8 +18,7 @@ class PzStr(str):
         self.string = string
 
     def reverse(self) -> PzStr:
-        self.string = self.string[::-1]
-        return PzStr(self.string)
+        return PzStr(self.string[::-1])
 
     def isEmpty(self) -> bool:
         return self.length == 0
@@ -47,6 +46,7 @@ class PzStr(str):
                 pzString.removeAt(i-catchCounter)
                 catchCounter+=1
         self.string = pzString.string
+        return self.string
 
     def removeAt(self,index:int)->PzStr:
         self.__setitem__(index,"")
