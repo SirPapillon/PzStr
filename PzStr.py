@@ -1,14 +1,15 @@
 from __future__ import annotations
 
+
 class PzStr(str):
-    def __init__(self, string:str):
+    def __init__(self, string: str):
         super().__init__()
         self.string = string
 
     def __str__(self):
         return self.string
 
-    def __setitem__(self, index:int, value):
+    def __setitem__(self, index: int, value):
         string = ""
         for i in range(self.length):
             if i == index:
@@ -29,34 +30,55 @@ class PzStr(str):
     def asList(self) -> list:
         return list(self.string)
 
-    def substring(self,begin:int,end:int) ->PzStr:
+    def substring(self, begin: int, end: int) -> PzStr:
         return PzStr(self.string[begin:end])
 
-
-    def remove(self,string:str)->PzStr:
-        self.string = self.string.replace(string,"")
+    def remove(self, string: str) -> PzStr:
+        self.string = self.string.replace(string, "")
         return PzStr(self.string)
 
-    def removeWhere(self,condition:lambda item:bool):
+    def removeWhere(self, condition: lambda item: bool):
         pzString = PzStr(self.string)
         catchCounter = 0
         for i in range(self.length):
             item = self.string[i]
             if condition(item):
-                pzString.removeAt(i-catchCounter)
-                catchCounter+=1
+                pzString.removeAt(i - catchCounter)
+                catchCounter += 1
         self.string = pzString.string
         return self.string
 
-    def removeAt(self,index:int)->PzStr:
-        self.__setitem__(index,"")
+    def removeAt(self, index: int) -> PzStr:
+        self.__setitem__(index, "")
         return PzStr(self.string)
 
-    def forEach(self,function:lambda item:item):
+    def insert(self, string: str, index: int = None) -> PzStr:
+        if index == None:
+            self.string += string
+            return PzStr(self.string)
+
+        first_part = PzStr(self.string)[0:index]
+        second_part = PzStr(self.string)[index:]
+
+        self.string = first_part+string+second_part
+
+        return PzStr(self.string)
+    def insertWhere(self,string:str,condition:lambda item:bool):
+        pzString = PzStr("")
+        for i in range(self.length):
+            item = self.string[i]
+            pzString += item
+            if condition(item):
+                pzString += string
+
+        self.string = pzString
+
+
+    def forEach(self, function: lambda item: item):
         for item in self.string:
             function(item)
 
-    def where(self,condition:lambda item:bool,function:lambda item:str):
+    def where(self, condition: lambda item: bool, function: lambda item: str):
         pzString = PzStr(self.string)
         for i in range(self.length):
             item = self.string[i]
@@ -64,23 +86,20 @@ class PzStr(str):
                 pzString[i] = function(item)
         self.string = pzString.string
 
-    def whereIndex(self,condition:lambda index:int,function:lambda index,item:item):
+    def whereIndex(self, condition: lambda index: int, function: lambda index, item: item):
         pzString = PzStr(self.string)
         for i in range(self.length):
             item = self.string[i]
             if condition(i):
-                pzString[i] = function(i,item)
+                pzString[i] = function(i, item)
         self.string = pzString.string
 
-
-
-
     @property
-    def length(self)->int:
+    def length(self) -> int:
         return len(self.string)
 
     @property
-    def first(self)->PzStr:
+    def first(self) -> PzStr:
         if self.length == 0:
             return PzStr("")
         return PzStr(self.string[0])
@@ -90,3 +109,4 @@ class PzStr(str):
         if self.length == 0:
             return PzStr("")
         return PzStr(self.string[-1])
+
