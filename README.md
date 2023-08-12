@@ -79,6 +79,18 @@ my_string.where(lambda char: char != " ", lambda char: char.upper())
 print("Uppercased:", my_string)  # Output: Uppercased: HEO, WRD!
 ```
 
+Insert "Awesome" at index 2
+```python
+my_string.insert("Awesome", 2)
+print(my_string)  # Output: HeAwesomello, world!
+```
+
+Insert "X" wherever the character is 'o'
+```python
+my_string.insertWhere("X", lambda item: item == 'o')
+print(my_string)  # Output: HeAwesoXmelloX, woXrld!
+```
+
 Access the length of the string
 ```python
 string_length = my_string.length
